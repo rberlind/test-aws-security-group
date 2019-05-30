@@ -6,10 +6,12 @@ variable "cidr_3" {}
 
 variable "cidr_4" {}
 
+variable "vpc_id" {}
+
 resource "aws_security_group" "test_nested" {
   name        = "test_nested"
   description = "test"
-  vpc_id      = "vpc-0ef62214b4149796f"
+  vpc_id      = "${var.vpc_id}"
 
   tags {
     name = "webapp00"

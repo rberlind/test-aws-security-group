@@ -14,19 +14,24 @@ variable "cidr_4" {
   default = "0.0.0.0/0"
 }
 
+variable "vpc_id" {
+  default = "vpc-0ef62214b4149796f"
+}
+
 module "nested" {
   source = "./module"
   cidr_1 = "${var.cidr_1}"
   cidr_2 = "${var.cidr_2}"
   cidr_3 = "${var.cidr_3}"
   cidr_4 = "${var.cidr_4}"
+  vpc_id = "${var.vpc_id}"
 }
 
 
 resource "aws_security_group" "test_root" {
   name        = "test_root"
   description = "test"
-  vpc_id      = "vpc-0ef62214b4149796f"
+  vpc_id      = "${var.vpc_id}"
 
   tags {
     name = "webapp00"
@@ -58,7 +63,6 @@ resource "aws_security_group" "test_root" {
     cidr_blocks = ["${var.cidr_3}"]
     self        = false
   }
-
 
   ingress {
     description = "internet facing lbs"
